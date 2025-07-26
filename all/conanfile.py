@@ -10,13 +10,14 @@ required_conan_version = ">=1.51.1"
 class ModernDurakUnrealCxx(ConanFile):
     name = "modern_durak_game"
     settings = "os", "compiler", "build_type", "arch"
-    options = {"shared": [True, False], "fPIC": [True, False]}
-    default_options = {"shared": False, "fPIC": True}
+    options = {"shared": [True, False], "fPIC": [True, False],"disable_multiplayer": [True, False]}
+    default_options = {"shared": False, "fPIC": True, "disable_multiplayer": False}
     generators = "CMakeDeps"
 
     def generate(self):
         tc = CMakeToolchain(self)
         tc.user_presets_path = False #workaround because this leads to useless options in cmake-tools configure
+        tc.variables["MODERN_DURAK_GAME_DISABLE_MULTIPLAYER"] = self.options.disable_multiplayer
         tc.generate()
 
     def config_options(self):
@@ -66,5 +67,6 @@ class ModernDurakUnrealCxx(ConanFile):
         cmake.install()
 
     def package_info(self):
-        self.cpp_info.libs = [self.name]
+        self.cpp_info.components[self.name].requires = ["durak::durak","modern_durak_game_shared::modern_durak_game_shared","corrade::corrade","durak_computer_controlled_opponent::durak_computer_controlled_opponent","sml::sml","my_web_socket::my_web_socket", "boost::headers","boost::json","boost::filesystem","confu_soci::confu_soci","confu_json::confu_json","magic_enum::magic_enum"]
+        self.cpp_info.components[self.name].libs = [self.name]
         
