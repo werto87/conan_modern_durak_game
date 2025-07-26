@@ -41,7 +41,7 @@ class ModernDurakUnrealCxx(ConanFile):
         self.requires("my_web_socket/0.1.3",transitive_headers=True)
 
     def source(self):
-        token = os.getenv("GIT_TOKEN")
+        token = os.getenv("GIT_TOKEN_MODERN_DURAK_GAME")
         if not token:
             raise Exception("Missing GIT_TOKEN environment variable")
 
