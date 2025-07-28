@@ -33,17 +33,18 @@ class ModernDurakUnrealCxx(ConanFile):
         self.requires("magic_enum/0.9.6")
         self.requires("boost/1.86.0",force=True,transitive_headers=True)
         self.requires("confu_json/[>=1.1.1 <2]@modern-durak",force=True)
+        self.requires("confu_soci/1.0.0",force=True)
         self.requires("sml/1.1.8") #DO NOT CHANGE THIS. starting with version 1.1.9 process_event returns ins some cases false where before it returned true
         self.requires("durak_computer_controlled_opponent/2.2.2")
-        self.requires("confu_soci/[<1]")
         self.requires("corrade/2025.06")
         self.requires("modern_durak_game_shared/latest",transitive_headers=True)
-        self.requires("my_web_socket/0.1.3",transitive_headers=True)
+        self.requires("my_web_socket/1.0.0",transitive_headers=True)
+
 
     def source(self):
         token = os.getenv("GIT_TOKEN_MODERN_DURAK_GAME")
         if not token:
-            raise Exception("Missing GIT_TOKEN environment variable")
+            raise Exception("Missing GIT_TOKEN_MODERN_DURAK_GAME environment variable")
 
         user = "werto87"
         repo_name = "modern_durak_game"
