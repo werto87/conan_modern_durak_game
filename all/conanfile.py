@@ -35,7 +35,7 @@ class ModernDurakUnrealCxx(ConanFile):
         self.requires("confu_json/[>=1.1.1 <2]@modern-durak",force=True)
         self.requires("confu_soci/1.0.0",force=True)
         self.requires("sml/1.1.8") #DO NOT CHANGE THIS. starting with version 1.1.9 process_event returns ins some cases false where before it returned true
-        self.requires("durak_computer_controlled_opponent/2.2.2")
+        self.requires("durak_computer_controlled_opponent/2.3.0")
         self.requires("corrade/2025.06")
         self.requires("modern_durak_game_shared/latest",transitive_headers=True)
         self.requires("my_web_socket/1.0.0",transitive_headers=True)
@@ -69,6 +69,6 @@ class ModernDurakUnrealCxx(ConanFile):
         cmake.install()
 
     def package_info(self):
-        self.cpp_info.components[self.name].requires = ["durak::durak","modern_durak_game_shared::modern_durak_game_shared","corrade::corrade","durak_computer_controlled_opponent::durak_computer_controlled_opponent","sml::sml","my_web_socket::my_web_socket", "boost::headers","confu_soci::confu_soci","confu_json::confu_json","magic_enum::magic_enum"]
+        self.cpp_info.components[self.name].requires = ["durak::durak","modern_durak_game_shared::modern_durak_game_shared","corrade::corrade","durak_computer_controlled_opponent::durak_computer_controlled_opponent","sml::sml","my_web_socket::my_web_socket", "boost::headers","confu_soci::confu_soci","confu_json::confu_json","magic_enum::magic_enum","login_matchmaking_game_shared::login_matchmaking_game_shared"]
         self.cpp_info.components[self.name].libs = [self.name]
         
