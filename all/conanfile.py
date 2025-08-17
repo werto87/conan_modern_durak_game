@@ -10,14 +10,16 @@ required_conan_version = ">=1.51.1"
 class ModernDurakUnrealCxx(ConanFile):
     name = "modern_durak_game"
     settings = "os", "compiler", "build_type", "arch"
-    options = {"shared": [True, False], "fPIC": [True, False],"disable_multiplayer": [True, False]}
-    default_options = {"shared": False, "fPIC": True, "disable_multiplayer": False}
+    options = {"shared": [True, False], "fPIC": [True, False],"disable_multiplayer": [True, False],"ignore_sml_process_event_result_workaround": [True, False]}
+    default_options = {"shared": False, "fPIC": True, "disable_multiplayer": False, "ignore_sml_process_event_result_workaround": False}
     generators = "CMakeDeps"
 
     def generate(self):
         tc = CMakeToolchain(self)
         tc.user_presets_path = False #workaround because this leads to useless options in cmake-tools configure
         tc.variables["MODERN_DURAK_GAME_DISABLE_MULTIPLAYER"] = self.options.disable_multiplayer
+        tc.variables["MODERN_DURAK_GAME_SML_RETURNS_UNHANDLED_EVENT_EVEN_IF_IT_GOT_HANDLED_WORKAROUND_BY_IGNORING_RETURN_VALUE"] = self.options.ignore_sml_process_event_result_workaround
+        
         tc.generate()
 
     def config_options(self):
@@ -34,7 +36,7 @@ class ModernDurakUnrealCxx(ConanFile):
         self.requires("boost/1.86.0",force=True,transitive_headers=True)
         self.requires("confu_json/[>=1.1.1 <2]@modern-durak",force=True)
         self.requires("confu_soci/1.0.0",force=True)
-        self.requires("sml/1.1.8") #DO NOT CHANGE THIS. starting with version 1.1.9 process_event returns ins some cases false where before it returned true
+        self.requires("sml/1.1.12")
         self.requires("durak_computer_controlled_opponent/2.3.0")
         self.requires("corrade/2025.06")
         self.requires("modern_durak_game_shared/latest",transitive_headers=True)
