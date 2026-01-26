@@ -1,9 +1,15 @@
-#include <modern_durak_game/server/server.hxx>
 #include <boost/json/src.hpp>
-BOOST_FUSION_DEFINE_STRUCT ((test), Player, (std::string, playerId) )
+#include <modern_durak_game/server/server.hxx>
+
+BOOST_FUSION_DEFINE_STRUCT((test), Player, (std::string, playerId))
 
 int main() {
-  [[maybe_unused]]auto server=modern_durak_game::Server{};
+
+  boost::asio::io_context ioContext_{};
+  boost::asio::ip::tcp::endpoint userToGameViaMatchmakingEndpoint_{};
+  boost::asio::ip::tcp::endpoint matchmakingGameEndpoint_;
+  [[maybe_unused]] auto server = modern_durak_game::Server{
+      ioContext_, userToGameViaMatchmakingEndpoint_, matchmakingGameEndpoint_};
 
   return 0;
 }

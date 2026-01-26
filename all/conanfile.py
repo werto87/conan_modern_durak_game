@@ -10,8 +10,20 @@ required_conan_version = ">=1.51.1"
 class ModernDurakUnrealCxx(ConanFile):
     name = "modern_durak_game"
     settings = "os", "compiler", "build_type", "arch"
-    options = {"shared": [True, False], "fPIC": [True, False],"disable_multiplayer": [True, False],"ignore_sml_process_event_result_workaround": [True, False]}
-    default_options = {"shared": False, "fPIC": True, "disable_multiplayer": False, "ignore_sml_process_event_result_workaround": False}
+    options = {
+        "shared": [True, False],
+        "fPIC": [True, False],
+        "disable_multiplayer": [True, False],
+        "ignore_sml_process_event_result_workaround": [True, False],
+         "log_boost_asio": [True, False],
+    }
+    default_options = {
+        "shared": False,
+        "fPIC": True,
+        "disable_multiplayer": False,
+        "ignore_sml_process_event_result_workaround": False,
+        "log_boost_asio": False
+    }
     generators = "CMakeDeps"
 
     def generate(self):
@@ -19,7 +31,7 @@ class ModernDurakUnrealCxx(ConanFile):
         tc.user_presets_path = False #workaround because this leads to useless options in cmake-tools configure
         tc.variables["MODERN_DURAK_GAME_DISABLE_MULTIPLAYER"] = self.options.disable_multiplayer
         tc.variables["MODERN_DURAK_GAME_SML_RETURNS_UNHANDLED_EVENT_EVEN_IF_IT_GOT_HANDLED_WORKAROUND_BY_IGNORING_RETURN_VALUE"] = self.options.ignore_sml_process_event_result_workaround
-        
+        tc.variables["LOG_BOOST_ASIO"] = self.options.log_boost_asio
         tc.generate()
 
     def config_options(self):
@@ -27,20 +39,20 @@ class ModernDurakUnrealCxx(ConanFile):
             del self.options.fPIC
 
     def configure(self):
-        self.options["catch2"].with_main = True
-        self.options["catch2"].with_benchmark = True
+        if self.options == "log_boost_asio":
+            self.options["my_web_socket"].log_boost_asio = True
 
     def requirements(self):
         self.requires("durak/2.0.0",force=True,transitive_headers=True)
         self.requires("magic_enum/0.9.6")
-        self.requires("boost/1.86.0",force=True,transitive_headers=True)
+        self.requires("boost/1.90.0",force=True,transitive_headers=True)
         self.requires("confu_json/[>=1.1.1 <2]@modern-durak",force=True)
         self.requires("confu_soci/1.0.0",force=True)
         self.requires("sml/1.1.12")
         self.requires("durak_computer_controlled_opponent/3.1.5")
         self.requires("corrade/2025.06")
         self.requires("modern_durak_game_shared/latest",transitive_headers=True)
-        self.requires("my_web_socket/1.0.0",transitive_headers=True)
+        self.requires("my_web_socket/4.0.1",transitive_headers=True)
         self.requires("login_matchmaking_game_shared/latest")
 
 
