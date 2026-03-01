@@ -43,10 +43,10 @@ class ModernDurakUnrealCxx(ConanFile):
             self.options["my_web_socket"].log_boost_asio = True
 
     def requirements(self):
-        self.requires("durak/2.0.0",force=True,transitive_headers=True)
+        self.requires("durak/2.1.1",force=True,transitive_headers=True)
         self.requires("magic_enum/0.9.6")
         self.requires("boost/1.90.0",force=True,transitive_headers=True)
-        self.requires("confu_json/[>=1.1.1 <2]@modern-durak",force=True)
+        self.requires("confu_json/[>=1.1.1 <2]",force=True)
         self.requires("confu_soci/1.0.0",force=True)
         self.requires("sml/1.1.12")
         self.requires("durak_computer_controlled_opponent/3.1.5")
