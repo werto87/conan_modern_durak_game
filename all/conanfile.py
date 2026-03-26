@@ -44,7 +44,7 @@ class ModernDurakUnrealCxx(ConanFile):
 
     def requirements(self):
         self.requires("durak/2.1.1",force=True,transitive_headers=True)
-        self.requires("magic_enum/0.9.6")
+        self.requires("magic_enum/0.9.7")
         self.requires("boost/1.90.0",force=True,transitive_headers=True)
         self.requires("confu_json/[>=1.1.1 <2]",force=True)
         self.requires("confu_soci/1.0.0",force=True)
